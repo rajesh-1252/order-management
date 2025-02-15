@@ -125,11 +125,10 @@ const OrderForm = ({ id }: { id: string }) => {
 
       <div>
         {products.map((item) => (
-          <div key={item.id} className="flex items-start mb-2 border p-2 rounded">
+          <div onClick={() => handleToggle(item.id)} key={item.id} className="flex items-start mb-2 border p-2 rounded">
             <input
               type="checkbox"
               checked={selectedProductIds.includes(item.id)}
-              onChange={() => handleToggle(item.id)}
               className="mt-1"
             />
             <div className="ml-2">
