@@ -23,18 +23,22 @@ const OrderManagementTable = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const fetchOrders = useCallback(async () => {
     try {
+      setLoading(true)
       const result = await getOrders({ page, search: debouncedSearch });
       if (result.success && result.data) {
         setOrders(result.data.orders ?? []);
         setTotalPages(result.data.totalPages);
+        setLoading(false)
       } else {
         // toast({ title: "Error", description: result.message || "Failed to fetch orders.", variant: "destructive" });
       }
     } catch {
+      setLoading(false)
       // toast({ title: "Error", description: error instanceof Error ? error.message : "An unknown error occurred.", variant: "destructive" });
     }
   }, [page, debouncedSearch]);
@@ -57,6 +61,14 @@ const OrderManagementTable = () => {
       // toast({ title: "Error", description: error instanceof Error ? error.message : "Error deleting order.", variant: "destructive" });
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full px-4 py-6">
