@@ -1,3 +1,4 @@
+
 'use server'
 import db from '../db'
 
@@ -5,8 +6,7 @@ export async function getProducts() {
   try {
     const result = await db.products.findMany()
     return { success: true, message: "Products fetched succesfully", data: result };
-  } catch (error) {
-    console.log(error, 'hello error')
+  } catch {
     return { success: false, message: "Faild to fetch products", data: [] };
   }
 }
@@ -21,8 +21,6 @@ export async function CreateOrder({
   orderDescription: string;
   productIds: number[];
 }) {
-
-  console.log({ productIds })
   try {
     const result = await db.orders.create({
       data: {
@@ -44,8 +42,7 @@ export async function CreateOrder({
       message: "Order created successfully with products",
       data: result,
     };
-  } catch (error) {
-    console.error('CreateOrder Error:', error);
+  } catch {
     return {
       success: false,
       message: "Failed to create order with products",
@@ -74,8 +71,7 @@ export async function getOrders({ page = 1, limit = 10, search = "" }) {
 
     const totalPages = Math.ceil(total / limit);
     return { success: true, data: { orders, totalPages } };
-  } catch (error) {
-    console.error('Error fetching orders:', error);
+  } catch {
     return { success: false, message: 'Failed to fetch orders' };
   }
 }
@@ -94,8 +90,7 @@ export async function getOrderById(id: number) {
       success: true,
       data: order,
     };
-  } catch (error) {
-    console.error('Error while fetching order:', error);
+  } catch {
     return {
       success: false,
       message: 'Failed to fetch order',
@@ -132,18 +127,7 @@ export async function editOrder({
       success: true,
       data: updatedOrder,
     };
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error('Error updating order:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      });
-      return {
-        success: false,
-        message: error.message,
-      };
-    }
+  } catch {
     return {
       success: false,
       message: 'An unknown error occurred',
@@ -166,23 +150,11 @@ export async function deleteOrder({ id }: { id: number }) {
       success: true,
       data: deletedOrder,
     };
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error('Error deleting order:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-      });
-      return {
-        success: false,
-        message: error.message,
-      };
-    }
-
-    console.error('Unexpected error deleting order:', error);
+  } catch {
     return {
       success: false,
-      message: 'Failed to delete order due to an unexpected error',
+      data: [],
     };
   }
 }
+
