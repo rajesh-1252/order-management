@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "prisma migrate dev",
+    "postinstall": "prisma generate",
     "seed": "node --loader ts-node/esm prisma/seed.ts"
   },
   "prisma": {
