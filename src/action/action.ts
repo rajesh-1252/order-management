@@ -106,9 +106,9 @@ export async function editOrder({
 
 
 export async function deleteOrder({ id }: { id: number }) {
-  if (!id) {
-    throw new Error('Order ID is required');
-  }
+  // if (!id) {
+  //   throw new Error('Order ID is required');
+  // }
   const deletedOrder = await db.orders.delete({
     where: { id },
   });

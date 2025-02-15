@@ -34,8 +34,8 @@ const OrderForm = ({ id }: { id: string }) => {
           setDescription(orderRes.data.orderDescription);
           setSelectedProductIds(orderRes.data.OrderProductMaps.map((item) => item.productId));
         }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load data');
+      } catch {
+        // setError(err instanceof Error ? err.message : 'Failed to load data');
       } finally {
         setLoading(false);
       }
@@ -96,9 +96,8 @@ const OrderForm = ({ id }: { id: string }) => {
         // console.error("Operation failed:", response.message);
         setLoading(false)
       }
-    } catch (error) {
+    } catch {
       setLoading(false)
-      console.error("Error during operation:", error);
     }
   };
 

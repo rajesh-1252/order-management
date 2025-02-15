@@ -34,10 +34,10 @@ const OrderManagementTable = () => {
       } else {
         // toast({ title: "Error", description: result.message || "Failed to fetch orders.", variant: "destructive" });
       }
-    } catch (error) {
-      toast({ title: "Error", description: error instanceof Error ? error.message : "An unknown error occurred.", variant: "destructive" });
+    } catch {
+      // toast({ title: "Error", description: error instanceof Error ? error.message : "An unknown error occurred.", variant: "destructive" });
     }
-  }, [page, debouncedSearch, toast]);
+  }, [page, debouncedSearch]);
 
   useEffect(() => {
     fetchOrders();
@@ -53,8 +53,8 @@ const OrderManagementTable = () => {
       }
       toast({ title: "Success", description: "Order deleted successfully." });
       await fetchOrders();
-    } catch (error) {
-      toast({ title: "Error", description: error instanceof Error ? error.message : "Error deleting order.", variant: "destructive" });
+    } catch {
+      // toast({ title: "Error", description: error instanceof Error ? error.message : "Error deleting order.", variant: "destructive" });
     }
   };
 
