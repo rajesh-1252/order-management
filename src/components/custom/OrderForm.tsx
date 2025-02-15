@@ -2,6 +2,7 @@
 import { CreateOrder, editOrder, getOrderById, getProducts } from '@/action/action';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { ShoppingCart } from 'lucide-react';
 
 const OrderForm = ({ id }: { id: string }) => {
   const orderId = Number(id);
@@ -12,7 +13,6 @@ const OrderForm = ({ id }: { id: string }) => {
   const [description, setDescription] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [productError, setProductError] = useState('');
-  // const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const OrderForm = ({ id }: { id: string }) => {
           setSelectedProductIds(orderRes.data.OrderProductMaps.map((item) => item.productId));
         }
       } catch {
-        // setError(err instanceof Error ? err.message : 'Failed to load data');
+        // handle error
       } finally {
         setLoading(false);
       }
@@ -73,7 +73,7 @@ const OrderForm = ({ id }: { id: string }) => {
     if (!isValid) return;
 
     try {
-      setLoading(true)
+      setLoading(true);
       let response;
       if (orderId) {
         response = await editOrder({
@@ -81,23 +81,19 @@ const OrderForm = ({ id }: { id: string }) => {
           orderDescription: description,
           productIds: selectedProductIds,
         });
-        setLoading(false)
       } else {
         response = await CreateOrder({
           orderDescription: description,
           productIds: selectedProductIds,
         });
-        setLoading(false)
       }
+      setLoading(false);
 
       if (response.success) {
         router.push('/order');
-      } else {
-        // console.error("Operation failed:", response.message);
-        setLoading(false)
       }
     } catch {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -109,9 +105,12 @@ const OrderForm = ({ id }: { id: string }) => {
     );
   }
 
-
   return (
-    <div className="border p-4 rounded-lg shadow-md w-96 mx-auto">
+    <div className="border p-4 rounded-lg shadow-md w-96 mx-auto relative">
+      <div className="absolute top-4 right-4 flex items-center space-x-2">
+        <ShoppingCart className="h-6 w-6 text-blue-500" />
+        <span className="text-blue-500 font-bold">{selectedProductIds.length}</span>
+      </div>
       <h2 className="text-2xl font-bold mb-2">{orderId ? 'Edit Order' : 'New Order'}</h2>
 
       <input
@@ -125,11 +124,12 @@ const OrderForm = ({ id }: { id: string }) => {
 
       <div>
         {products.map((item) => (
-          <div onClick={() => handleToggle(item.id)} key={item.id} className="flex items-start mb-2 border p-2 rounded">
+          <div onClick={() => handleToggle(item.id)} key={item.id} className="flex items-start mb-2 border p-2 rounded cursor-pointer hover:bg-gray-100 transition">
             <input
               type="checkbox"
               checked={selectedProductIds.includes(item.id)}
               className="mt-1"
+              readOnly
             />
             <div className="ml-2">
               <div className="font-bold text-green-700">{item.productName}</div>
