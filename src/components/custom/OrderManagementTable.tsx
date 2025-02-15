@@ -91,11 +91,11 @@ const OrderManagementTable = () => {
                 <TableCell className="text-right">
                   {new Date(order.createdAt).toLocaleDateString()}
                 </TableCell>
-                <TableCell className="text-right space-x-2">
-                  <Button variant="outline" size="sm" onClick={() => handleEdit(order.id)}>
+                <TableCell className="text-right space-x-2 ">
+                  <Button className="w-[100px] mb-3 sm:mb-0" variant="outline" size="sm" onClick={() => handleEdit(order.id)}>
                     <Pencil className="w-4 h-4 mr-1" /> Edit
                   </Button>
-                  <Button variant="destructive" size="sm" onClick={() => handleDelete(order.id)}>
+                  <Button className="w-[100px]" variant="destructive" size="sm" onClick={() => handleDelete(order.id)}>
                     <Trash2 className="w-4 h-4 mr-1" /> Delete
                   </Button>
                 </TableCell>
