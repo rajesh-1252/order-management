@@ -32,7 +32,7 @@ const OrderManagementTable = () => {
         setOrders(result.data.orders ?? []);
         setTotalPages(result.data.totalPages);
       } else {
-        toast({ title: "Error", description: result.message || "Failed to fetch orders.", variant: "destructive" });
+        // toast({ title: "Error", description: result.message || "Failed to fetch orders.", variant: "destructive" });
       }
     } catch (error) {
       toast({ title: "Error", description: error instanceof Error ? error.message : "An unknown error occurred.", variant: "destructive" });

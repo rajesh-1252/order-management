@@ -93,7 +93,7 @@ const OrderForm = ({ id }: { id: string }) => {
       if (response.success) {
         router.push('/order');
       } else {
-        console.error("Operation failed:", response.message);
+        // console.error("Operation failed:", response.message);
         setLoading(false)
       }
     } catch (error) {
