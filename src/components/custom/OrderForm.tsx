@@ -12,7 +12,7 @@ const OrderForm = ({ id }: { id: string }) => {
   const [description, setDescription] = useState('');
   const [descriptionError, setDescriptionError] = useState('');
   const [productError, setProductError] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  // const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -109,9 +109,6 @@ const OrderForm = ({ id }: { id: string }) => {
     );
   }
 
-  if (error) {
-    return <div className="text-red-500">Error: {error}</div>;
-  }
 
   return (
     <div className="border p-4 rounded-lg shadow-md w-96 mx-auto">
